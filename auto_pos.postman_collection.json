@@ -88,7 +88,7 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"result is true\", function () {",
+							"pm.test(\"result is success\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.result).to.eql(\"success\");",
 							"});"
@@ -164,7 +164,7 @@
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.result).to.eql(\"success\");",
 							"});",
-							"pm.test(\"Your test name\", function () {",
+							"pm.test(\"result is not empty\", function () {",
 							"    var qrcode = pm.response.json().qr_code.split('=')[1];",
 							"    pm.expect(qrcode).to.not.be.empty",
 							"});",
