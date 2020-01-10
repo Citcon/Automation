@@ -185,16 +185,16 @@
 					"script": {
 						"id": "971c5494-2149-4b80-a74e-cd36660d9830",
 						"exec": [
-							"console.log(pm.response)",
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
+							
 							"pm.test(\"result is success\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.status).to.eql(\"success\");",
 							"    pm.globals.set(\"transaction_id\", jsonData.id);",
 							"});",
-							"",
+							
 							"",
 							"",
 							""

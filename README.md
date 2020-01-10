@@ -38,5 +38,11 @@
   o2o_pay
   o2o_refund
 ```
+#### mobilepay_cc:
 
+```
+  pay
+  key
+  refund
+```
 
