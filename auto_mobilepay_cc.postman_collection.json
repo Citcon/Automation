@@ -165,7 +165,7 @@
 							"}else{\r",
 							"    \r",
 							"\r",
-							"    console.log(pm.globals.get(\"forgeJS\"))\r",
+							"    console.log(\"==================\",pm.globals.get(\"forgeJS\"))\r",
 							"    eval(pm.globals.get(\"forgeJS\"))\r",
 							"    let public_key = `-----BEGIN PUBLIC KEY-----${publicKey}-----END PUBLIC KEY-----`;\r",
 							"    console.log(public_key)\r",
