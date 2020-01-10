@@ -186,7 +186,7 @@
 						"id": "971c5494-2149-4b80-a74e-cd36660d9830",
 						"exec": [
 
-							"console.log(pm.response.json)",
+							"console.log(pm.response.json())",
 
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
