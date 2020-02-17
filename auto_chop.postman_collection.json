@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "55aae738-4c75-419c-908d-ad77c2b8f3e5",
+		"_postman_id": "6333c395-3a1e-4c9f-90c7-fbce09607e20",
 		"name": "auto_chop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -47,6 +47,24 @@
 							"}",
 							"else{",
 							"    postman.setNextRequest(\"inquire\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bcb9067b-293c-466b-9cff-0f994f9a5b8a",
+						"exec": [
+							"let vendor = pm.iterationData.get(\"vendor\");",
+							"if (vendor=='upop'){",
+							"    console.log(vendor)",
+							"    ",
+							"pm.environment.set(\"chop_token\", \"52463C5B22A163F4AF9CDD35DF881BDB\");",
+							"}",
+							"else{",
+							"    pm.environment.set(\"chop_token\", \"12341234123412341234123412341234\");",
 							"}"
 						],
 						"type": "text/javascript"
