@@ -393,6 +393,78 @@
 			"response": []
 		},
 		{
+			"name": "pos_inquire",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "daf15c01-d1d9-4c64-98d7-10862bf0e64f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql('success');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "CEBF4A23",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "HUANG121212150010011702",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-02-17 16:57:23",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://uat.citconpay.com/posp/rest/inquire",
+					"protocol": "https",
+					"host": [
+						"uat",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"inquire"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "o2o_pay",
 			"event": [
 				{
