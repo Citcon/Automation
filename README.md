@@ -37,6 +37,7 @@
   get_history
   o2o_pay
   o2o_refund
+  inquire
 ```
 #### mobilepay_cc:
 
