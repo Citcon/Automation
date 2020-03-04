@@ -11,14 +11,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "a1caf610-67a6-4a4e-9fe3-8cff63a09407",
+						"id": "e8b21175-34ea-4b78-b349-4a5bb9e09a22",
 						"exec": [
-							"// let vendor = pm.iterationData.get('vendor');",
-							"// let client_country = pm.iterationData.get('client_country');",
-							"",
-							"// pm.globals.set(\"vendor\", vendor);",
-							"// pm.globals.set('client_country', client_country);",
-							"// console.log(vendor,client_country);"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -26,7 +21,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "11d11869-b70d-47eb-9b24-d8b75a3f9780",
+						"id": "4330792e-2804-49fb-9f40-117e88f84522",
 						"exec": [
 							"let auth = pm.environment.get(\"token\");",
 							"let url = pm.environment.get(\"url\");",
@@ -42,7 +37,7 @@
 							"        q = 'q=U';",
 							"        break;",
 							"    default:",
-							"        q = 'q=P';",
+							"        q = 'q=CTCN-P';",
 							"      ",
 							"}",
 							"",
@@ -664,7 +659,7 @@
 							"        q = 'q=U';",
 							"        break;",
 							"    default:",
-							"        q = 'q=P';",
+							"        q = 'q=CTCN-P';",
 							"      ",
 							"    ",
 							"}",
