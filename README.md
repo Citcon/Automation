@@ -38,6 +38,7 @@
   o2o_pay
   o2o_refund
   inquire
+  pay
 ```
 #### mobilepay_cc:
 
