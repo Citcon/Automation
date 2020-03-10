@@ -40,18 +40,26 @@
 					"urlencoded": [
 						{
 							"key": "store_code",
-							"value": "5b5b4ddf",
+							"value": "{{terminal_code}}",
 							"type": "text"
 						},
 						{
 							"key": "nonce",
 							"value": "1576228157",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "hash",
 							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
-							"type": "text"
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "version",
+							"value": "2.6.0",
+							"type": "text",
+							"disabled": true
 						}
 					],
 					"options": {
@@ -112,18 +120,20 @@
 					"urlencoded": [
 						{
 							"key": "token",
-							"value": "5b5b4ddf",
+							"value": "{{terminal_code}}",
 							"type": "text"
 						},
 						{
 							"key": "nonce",
 							"value": "1576228157",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "hash",
 							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						}
 					],
 					"options": {
@@ -189,18 +199,20 @@
 					"urlencoded": [
 						{
 							"key": "token",
-							"value": "5b5b4ddf",
+							"value": "{{terminal_code}}",
 							"type": "text"
 						},
 						{
 							"key": "nonce",
 							"value": "1576228157",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "hash",
 							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "tip",
@@ -226,6 +238,111 @@
 						"posp",
 						"rest",
 						"gen_payment_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_pay",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e01edcfe-f792-4988-8f61-35b284241171",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql('fail');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "134616056466367489",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangpay",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
 					]
 				}
 			},
@@ -266,8 +383,39 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "hash=e74422a5a783f8f3b78597be161a98ed&nonce=1576472353&note=TEST&pos_local_time=2019-12-16%2012%3A59%3A13&refund_amount=0&signature=JegsI2SplXBBRfQMP%252B5Hu9h6OoOh%252Bsd7I9A2G%252BkNx3H%252FWollP4CVS%252BbP3PtUMbBW4aC8JTMma%252FwPwEhEAhX32Lb6%252FKge9VRQfS1wdJf%252BypMo6w17In2TTh7DbaAsKGug75ZiriU2Pt7TuCG95B0fZyJJVu2pNKAlBvuVy6GQLxs1C5pI9xHnHgMppfM8qHcGy8hco1Yc9bwGL1Iui1QddQkPYEqhZKOLZv48iCO6rneid1u0H8JNmMu2kD%252B9586lXu2UfTnhcaTpVhvBOxT3K9nWyHH22hyDka%252BYVjq%252F6lXfrmqQyEeUZK98rYi8SZ5R93DyQ4HaVYt70H36rVhXVg%253D%253D&tag=&token=5b5b4ddf&transaction_id=280024356375&version=2.5.1"
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 21:46:52",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangrefund",
+							"type": "text"
+						},
+						{
+							"key": "refund_amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "1234567121212150010013480",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "https://{{url}}.citconpay.com/posp/rest/refund",
@@ -316,13 +464,29 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/x-www-form-urlencoded"
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "hash=e74422a5a783f8f3b78597be161a98ed&nonce=1576472353&note=TEST&pos_local_time=2019-12-16%2012%3A59%3A13&refund_amount=0&signature=JegsI2SplXBBRfQMP%252B5Hu9h6OoOh%252Bsd7I9A2G%252BkNx3H%252FWollP4CVS%252BbP3PtUMbBW4aC8JTMma%252FwPwEhEAhX32Lb6%252FKge9VRQfS1wdJf%252BypMo6w17In2TTh7DbaAsKGug75ZiriU2Pt7TuCG95B0fZyJJVu2pNKAlBvuVy6GQLxs1C5pI9xHnHgMppfM8qHcGy8hco1Yc9bwGL1Iui1QddQkPYEqhZKOLZv48iCO6rneid1u0H8JNmMu2kD%252B9586lXu2UfTnhcaTpVhvBOxT3K9nWyHH22hyDka%252BYVjq%252F6lXfrmqQyEeUZK98rYi8SZ5R93DyQ4HaVYt70H36rVhXVg%253D%253D&tag=&token=5b5b4ddf&transaction_id=280024356375&version=2.5.1"
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "1234567121212150010013471",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "cancel",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "https://{{url}}.citconpay.com/posp/rest/cancel",
@@ -372,8 +536,14 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "hash=23ecf7d88b9da4cb6e730fef867325d2&nonce=1576468383&note=TEST&signature=k2ZTQj7UAx83aWYhG09n8SNQBkyHBNVSCCRuVH9SRFvGjP70CsEziQfiJoUS%252Bf7pex%252BW5aDoKsgqEEBA%252B5ETLfXDB9%252FVQhyyKPVLYNjxSoavULgRFpMdyJ0p75CsmbX1l3Ws2PEmj4FX3cFJgAGc6vsLMzb7r3aN%252FNRMA0NOrcsO8osE3rpG2MH8k%252BlmkupPaqdjUV7QtDJPb3tD%252BgFAasZHyzgdCx5xPhgXe0obvJNs4Qd8gZD3P9Enb0zfBBgMsU4NTGd1EPkmYX0yakbdxpXUPdrY49lrhcHad%252B1YZrEhc%252B4xSA49kzbV8VS0JouGrJpp4wA0g5TDbmDL0Tm2Gg%253D%253D&timezone=Asia/Shanghai&token=5b5b4ddf&version=2.5.1"
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "https://{{url}}.citconpay.com/posp/rest/get_history",
@@ -427,7 +597,7 @@
 					"urlencoded": [
 						{
 							"key": "token",
-							"value": "CEBF4A23",
+							"value": "{{terminal_code}}",
 							"type": "text"
 						},
 						{
@@ -602,7 +772,7 @@
 						{
 							"key": "transaction_id",
 							"value": "150000003793",
-							"description": "mobilepay transaction_id",
+							"description": "online transaction_id",
 							"type": "text",
 							"disabled": true
 						},
