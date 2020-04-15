@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "6db0ee0d-882a-433e-8449-d1a1e7460669",
+		"name": "runtime",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "chop runtime",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dfd11009-9e8b-4f95-9c44-382ba581baf0",
+						"exec": [
+							"const q = pm.response.json().url.split(\"q=\")[1]",
+							"",
+							"pm.sendRequest(`http://localhost:3000/api/transactions?_where=(payment_instance_token,eq,${q})`, function (err, response) {",
+							"    if(err){",
+							"        console.log(err)",
+							"    }",
+							"   pm.test(\"source is chop\", function () {",
+							"       console.log(response.json()[0].source)",
+							"       pm.expect(response.json()[0].source).to.equal('chop')",
+							"      ",
+							"});",
+							"  })",
+							"",
+							"",
+							"   ",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{chop_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "payment_method",
+							"value": "alipay",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangtest22222222",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "https://www.baidu.com",
+							"type": "text"
+						},
+						{
+							"key": "callback_url_success",
+							"value": "http://merchant.com/success",
+							"type": "text"
+						},
+						{
+							"key": "callback_url_fail",
+							"value": "https://www.baidu.com",
+							"type": "text"
+						},
+						{
+							"key": "mobile_result_url",
+							"value": "http://merchant.com/mobile_confirm?reference=huangtest2222",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "client_country",
+							"value": "CN",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "user_token",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "timeout",
+							"value": "0",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "ext",
+							"value": "{\"lang\":\"CHI\",\"timeout\":\"300\"}",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/chop/chop",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"chop",
+						"chop"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
