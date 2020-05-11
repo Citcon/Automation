@@ -6,7 +6,778 @@
 	},
 	"item": [
 		{
-			"name": "chop runtime",
+			"name": "pay",
+			"item": [
+				{
+					"name": "pay invalid token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82e7e61d-c92a-4569-b256-d0987967d5c0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"result\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.res_status).to.eql('fail');",
+									"});",
+									"pm.test(\"code\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error_code).to.eql('4010');",
+									"});",
+									"",
+									"pm.test(\"message\", function () {",
+									"    console.log(pm.response.text())",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid token\");",
+									"});",
+									"const sign = pm.variables.get(\"sign\");",
+									"console.log(sign)",
+									"pm.test(\"sign\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.sign).to.eql(sign);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e8967fed-f6dd-493f-a412-4854960c5669",
+								"exec": [
+									"pm.variables.set(\"sign\", \"12345566\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"123\",\n    \"amount\": 1,\n    \"currency\": \"USD\",\n    \"payment_method\": \"alipay\",\n    \"payment_params\": {\n        \"scene\": \"barcode\",\n        \"auth_code\": \"28763443825664394\",\n        \"agreement_no\": \"20170502000610755993\"\n    },\n    \"reference\": \"84238473247832874238\",\n    \"ipn_url\": \"http://merchant.com/ipn.php\",\n    \"allow_duplicates\": \"yes\",\n    \"source\": \"source\",\n    \"timestamp\": \"2020-03-17T03:07:50-05:00\",\n    \"sign\": {{sign}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_token",
+							"protocol": "https",
+							"host": [
+								"8e99cce9-7338-4b45-9296-e40855abfad6",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"pay_invalid_token"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "pay invalid token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_token",
+									"protocol": "https",
+									"host": [
+										"8e99cce9-7338-4b45-9296-e40855abfad6",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"pay_invalid_token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 06:05:16 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-7hO0T/XLq3TuFViTu2ZVQQdIY+A\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1587016567"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=b407505d95fa21bb"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=566218cb51f73bff"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\"res_status\": \"fail\",\r\n\t\"error_code\": \"4010\",\r\n\t\"error_msg\": \"Invalid token. Please contact Citcon .\",\r\n\t\"sign\":\"202CB962AC59075B964B07152D234B71\"}\r\n"
+						}
+					]
+				},
+				{
+					"name": "pay success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4\",\n    \"amount\": 1,\n    \"currency\": \"USD\",\n    \"payment_method\": \"alipay\",\n    \"payment_params\": {\n        \"scene\": \"barcode\",\n        \"auth_code\": \"28763443825664394\",\n        \"agreement_no\": \"20170502000610755993\"\n    },\n    \"reference\": \"84238473247832874238\",\n    \"ipn_url\": \"http://merchant.com/ipn.php\",\n    \"allow_duplicates\": \"yes\",\n    \"source\": \"source\",\n    \"timestamp\": \"2020-03-17T03:07:50-05:00\",\n    \"sign\": \"202CB962AC59075B964B07152D234B70\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_success",
+							"protocol": "https",
+							"host": [
+								"8e99cce9-7338-4b45-9296-e40855abfad6",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"pay_success"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "pay success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_success",
+									"protocol": "https",
+									"host": [
+										"8e99cce9-7338-4b45-9296-e40855abfad6",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"pay_success"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 05:55:07 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-7hO0T/XLq3TuFViTu2ZVQQdIY+A\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1587016567"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=b407505d95fa21bb"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=566218cb51f73bff"
+								},
+								{
+									"key": "Content-Length",
+									"value": "140"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{    \"res_status\": \"success\",    \"data\": {        \"id\": \"D0000001079-83c6b94bf5b61afe2e21\",        \"reference\": \"321d011da1636e0ab9e001d2f\"    },    \"sign\":\"202CB962AC59075B964B07152D234B71\" }"
+						}
+					]
+				},
+				{
+					"name": "pay invalid amount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4\",\n    \"amount\": 0,\n    \"currency\": \"USD\",\n    \"payment_method\": \"alipay\",\n    \"payment_params\": {\n        \"scene\": \"barcode\",\n        \"auth_code\": \"28763443825664394\",\n        \"agreement_no\": \"20170502000610755993\"\n    },\n    \"reference\": \"84238473247832874238\",\n    \"ipn_url\": \"http://merchant.com/ipn.php\",\n    \"allow_duplicates\": \"yes\",\n    \"source\": \"source\",\n    \"timestamp\": \"2020-03-17T03:07:50-05:00\",\n    \"sign\": \"202CB962AC59075B964B07152D234B70\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_amount",
+							"protocol": "https",
+							"host": [
+								"8e99cce9-7338-4b45-9296-e40855abfad6",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"pay_invalid_amount"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "pay invalid amount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_amount",
+									"protocol": "https",
+									"host": [
+										"8e99cce9-7338-4b45-9296-e40855abfad6",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"pay_invalid_amount"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 06:05:16 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-7hO0T/XLq3TuFViTu2ZVQQdIY+A\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1587016567"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=b407505d95fa21bb"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=566218cb51f73bff"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"res_status\": \"fail\",\r\n    \"error_code\": \"4030\",\r\n    \"error_msg\": \"amount must be greater than 0\",\r\n    \"sign\": \"202CB962AC59075B964B07152D234B71\"\r\n}\r\n"
+						}
+					]
+				},
+				{
+					"name": "pay invalid currency",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4\",\n    \"amount\": 1,\n    \"currency\": \"CNY\",\n    \"payment_method\": \"alipay\",\n    \"payment_params\": {\n        \"scene\": \"barcode\",\n        \"auth_code\": \"28763443825664394\",\n        \"agreement_no\": \"20170502000610755993\"\n    },\n    \"reference\": \"84238473247832874238\",\n    \"ipn_url\": \"http://merchant.com/ipn.php\",\n    \"allow_duplicates\": \"yes\",\n    \"source\": \"source\",\n    \"timestamp\": \"2020-03-17T03:07:50-05:00\",\n    \"sign\": \"202CB962AC59075B964B07152D234B70\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_currency",
+							"protocol": "https",
+							"host": [
+								"8e99cce9-7338-4b45-9296-e40855abfad6",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"pay_invalid_currency"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "pay invalid amount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_currency",
+									"protocol": "https",
+									"host": [
+										"8e99cce9-7338-4b45-9296-e40855abfad6",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"pay_invalid_currency"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 06:05:16 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-7hO0T/XLq3TuFViTu2ZVQQdIY+A\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1587016567"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=b407505d95fa21bb"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=566218cb51f73bff"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"res_status\": \"fail\",\r\n    \"error_code\": \"4012\",\r\n    \"error_msg\": \"invalid currency %s, it is not merchant's primary currency.\",\r\n    \"sign\": \"202CB962AC59075B964B07152D234B71\"\r\n}\r\n"
+						}
+					]
+				},
+				{
+					"name": "pay invalid method",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4\",\n    \"amount\": 1,\n    \"currency\": \"USD\",\n    \"payment_method\": \"wechatpay\",\n    \"payment_params\": {\n        \"scene\": \"barcode\",\n        \"auth_code\": \"28763443825664394\",\n        \"agreement_no\": \"20170502000610755993\"\n    },\n    \"reference\": \"84238473247832874238\",\n    \"ipn_url\": \"http://merchant.com/ipn.php\",\n    \"allow_duplicates\": \"yes\",\n    \"source\": \"source\",\n    \"timestamp\": \"2020-03-17T03:07:50-05:00\",\n    \"sign\": \"202CB962AC59075B964B07152D234B70\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_method",
+							"protocol": "https",
+							"host": [
+								"8e99cce9-7338-4b45-9296-e40855abfad6",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"pay_invalid_method"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "pay invalid method",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_method",
+									"protocol": "https",
+									"host": [
+										"8e99cce9-7338-4b45-9296-e40855abfad6",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"pay_invalid_method"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 06:05:16 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-7hO0T/XLq3TuFViTu2ZVQQdIY+A\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1587016567"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=b407505d95fa21bb"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=566218cb51f73bff"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"res_status\": \"fail\",\r\n    \"error_code\": \"4054\",\r\n    \"error_msg\": \"payment method not allowed for this merchant\",\r\n    \"sign\": \"202CB962AC59075B964B07152D234B71\"\r\n}\r\n"
+						}
+					]
+				},
+				{
+					"name": "pay invalid sign",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4\",\n    \"amount\": 1,\n    \"currency\": \"USD\",\n    \"payment_method\": \"alipay\",\n    \"payment_params\": {\n        \"scene\": \"barcode\",\n        \"auth_code\": \"28763443825664394\",\n        \"agreement_no\": \"20170502000610755993\"\n    },\n    \"reference\": \"84238473247832874238\",\n    \"ipn_url\": \"http://merchant.com/ipn.php\",\n    \"allow_duplicates\": \"yes\",\n    \"source\": \"source\",\n    \"timestamp\": \"2020-03-17T03:07:50-05:00\",\n    \"sign\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_sign",
+							"protocol": "https",
+							"host": [
+								"8e99cce9-7338-4b45-9296-e40855abfad6",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"pay_invalid_sign"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "pay invalid sign",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://8e99cce9-7338-4b45-9296-e40855abfad6.mock.pstmn.io/pay_invalid_sign",
+									"protocol": "https",
+									"host": [
+										"8e99cce9-7338-4b45-9296-e40855abfad6",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"pay_invalid_sign"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 06:05:16 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a4-7hO0T/XLq3TuFViTu2ZVQQdIY+A\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "120"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "119"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1587016567"
+								},
+								{
+									"key": "x-srv-span",
+									"value": "v=1;s=b407505d95fa21bb"
+								},
+								{
+									"key": "x-srv-trace",
+									"value": "v=1;t=566218cb51f73bff"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"res_status\": \"fail\",\r\n    \"error_code\": \"4014\",\r\n    \"error_msg\": \"invalid sign\",\r\n    \"sign\": \"202CB962AC59075B964B07152D234B71\"\r\n}\r\n"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "runtime example",
 			"event": [
 				{
 					"listen": "test",

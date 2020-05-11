@@ -101,7 +101,7 @@
 						},
 						{
 							"key": "ipn_url",
-							"value": "https://{{url}}.citconpay.com/chop/ipn_cc",
+							"value": "https://{{url}}/chop/ipn_cc",
 							"type": "text"
 						},
 						{
@@ -127,7 +127,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/payment/key",
+					"raw": "https://{{url}}/payment/key",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -29432,7 +29432,7 @@
 						},
 						{
 							"key": "ipn_url",
-							"value": "https://{{url}}.citconpay.com/chop/ipn_cc",
+							"value": "https://{{url}}/chop/ipn_cc",
 							"type": "text"
 						},
 						{
@@ -29485,7 +29485,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/payment/pay",
+					"raw": "https://{{url}}/payment/pay",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -29567,7 +29567,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/payment/refund",
+					"raw": "https://{{url}}/payment/refund",
 					"protocol": "https",
 					"host": [
 						"{{url}}",

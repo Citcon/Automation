@@ -69,7 +69,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/initialize",
+					"raw": "https://{{url}}/posp/rest/initialize",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -143,7 +143,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/sign_in",
+					"raw": "https://{{url}}/posp/rest/sign_in",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -227,7 +227,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/gen_payment_qr",
+					"raw": "https://{{url}}/posp/rest/gen_payment_qr",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -332,12 +332,113 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/pay",
+					"raw": "https://{{url}}/posp/rest/pay",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_pay_cupqr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9bd136c0-9386-4cda-ba1a-b549d76ce700",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql('[scanCodeId]DATA_FORMAT_ERROR');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "2E2049C7",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "hQVDUFY",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangpay",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -412,18 +513,100 @@
 						},
 						{
 							"key": "transaction_id",
-							"value": "1234567121212150010013480",
+							"value": "12345678901877",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/refund",
+					"raw": "https://{{url}}/posp/rest/refund",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"refund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_refund_cupqr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76bc3c40-30e5-4e88-a2e7-d01da8e7c9c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"fail\");",
+							"});",
+							"pm.test(\"message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Original transaction not found or already refunded\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "2E2049C7",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 21:46:52",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangrefund",
+							"type": "text"
+						},
+						{
+							"key": "refund_amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "12345678901466",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -489,7 +672,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/cancel",
+					"raw": "https://{{url}}/posp/rest/cancel",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -546,7 +729,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/rest/get_history",
+					"raw": "https://{{url}}/posp/rest/get_history",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -706,7 +889,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/o2o_pay",
+					"raw": "https://{{url}}/posp/o2o_pay",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
@@ -785,7 +968,7 @@
 					]
 				},
 				"url": {
-					"raw": "https://{{url}}.citconpay.com/posp/o2o_refund",
+					"raw": "https://{{url}}/posp/o2o_refund",
 					"protocol": "https",
 					"host": [
 						"{{url}}",
