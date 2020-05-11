@@ -72,9 +72,7 @@
 					"raw": "https://{{url}}/posp/rest/initialize",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -146,9 +144,7 @@
 					"raw": "https://{{url}}/posp/rest/sign_in",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -230,9 +226,7 @@
 					"raw": "https://{{url}}/posp/rest/gen_payment_qr",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -466,7 +460,7 @@
 							"});",
 							"pm.test(\"code\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.code).to.eql(\"A3\");",
+							"    pm.expect(jsonData.code).to.eql(\"D1\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -513,7 +507,7 @@
 						},
 						{
 							"key": "transaction_id",
-							"value": "12345678901877",
+							"value": "121212150010012638",
 							"type": "text"
 						}
 					]
@@ -675,9 +669,7 @@
 					"raw": "https://{{url}}/posp/rest/cancel",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -732,9 +724,7 @@
 					"raw": "https://{{url}}/posp/rest/get_history",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -801,12 +791,10 @@
 					]
 				},
 				"url": {
-					"raw": "https://uat.citconpay.com/posp/rest/inquire",
+					"raw": "https://{{url}}/posp/rest/inquire",
 					"protocol": "https",
 					"host": [
-						"uat",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -892,9 +880,7 @@
 					"raw": "https://{{url}}/posp/o2o_pay",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
@@ -971,9 +957,7 @@
 					"raw": "https://{{url}}/posp/o2o_refund",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"posp",
