@@ -130,9 +130,7 @@
 					"raw": "https://{{url}}/payment/key",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"payment",
@@ -148,7 +146,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "cae2a363-542d-4aa4-b735-758138977b8c",
+						"id": "474f5804-983e-411f-aedf-88d8ed59a454",
 						"exec": [
 							"\r",
 							"let publicKey = pm.globals.get(\"publicKey\");\r",
@@ -29362,7 +29360,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "971c5494-2149-4b80-a74e-cd36660d9830",
+						"id": "526777cc-b9e1-4c3b-a6d0-5501e48e11c6",
 						"exec": [
 							"console.log(pm.response.json())",
 							"pm.test(\"Status code is 200\", function () {",
@@ -29488,9 +29486,7 @@
 					"raw": "https://{{url}}/payment/pay",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"payment",
@@ -29570,9 +29566,7 @@
 					"raw": "https://{{url}}/payment/refund",
 					"protocol": "https",
 					"host": [
-						"{{url}}",
-						"citconpay",
-						"com"
+						"{{url}}"
 					],
 					"path": [
 						"payment",
