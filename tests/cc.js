@@ -21,6 +21,7 @@ async function getUrl() {
     const config = {
         method: 'post',
         url: 'https://uat.citconpay.com/chop/chop',
+        // url:'http://localhost/chop/chop'
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Bearer 4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4',
@@ -30,7 +31,8 @@ async function getUrl() {
     };
 
     let response = await axios(config)
-    let url = await response.data.url
+
+    let url = response .data.url
     console.log(url)
     return url
         // .then(function (response) {
@@ -50,12 +52,12 @@ async function getUrl() {
 
 fixture `cc pay`
     .meta('fixtureID','f-001')
-    .meta({author:'tommie',createDate:'2020/5'})
+    .meta({author:'tommie',createDate:'2020/7'})
     .before(async ctx =>{
         ctx.url = await getUrl()
     })
 
-    .page `https://www.baidu.com`
+
 
 
 test
