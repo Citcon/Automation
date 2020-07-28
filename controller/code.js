@@ -1,4 +1,4 @@
-const { exec } = require('../db/mysql')
+const { exec } = require('../db/citconUser')
 
 
 const getCode = () =>{

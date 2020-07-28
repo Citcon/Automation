@@ -2,13 +2,10 @@ import { Selector } from 'testcafe';
 import  axios  from 'axios'
 import  qs  from 'querystring'
 
-
 async function getUrl() {
-    
-
 
     const data = qs.stringify({
-        'payment_method': 'cc',
+        'payment_method': 'alipay',
         'amount': '1',
         'currency': 'USD',
         'reference': 'huangtest22222222',
@@ -21,11 +18,10 @@ async function getUrl() {
     const config = {
         method: 'post',
         url: 'https://uat.citconpay.com/chop/chop',
-        // url:'http://localhost/chop/chop'
+
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer 4A31F6E4B07E4A5A9FA9ECDFBCEEBAB4',
-            'Cookie': 'SERVERID=online-uat-001'
+            'Authorization': 'Bearer 535F0246ED7E47D6AF4A753EE7475B06',
         },
         data: data
     };
@@ -35,46 +31,23 @@ async function getUrl() {
     let url = response.data.url
     console.log(url)
     return url
-        // .then(function (response) {
-        //
-        //     console.log((response.data.url));
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
 
 
 }
 
 
-
-
-
-fixture `cc`
-    .meta('fixtureID','f-001')
+fixture `alipay`
+    .meta('fixtureID','f-003')
     .meta({author:'tommie',createDate:'2020/7'})
     .before(async ctx =>{
         ctx.url = await getUrl()
     })
 
-
-
-
 test
-('pay success', async t => {
-    console.log(t.fixtureCtx.url)
+
+('h5 pay', async t => {
 
     await t.navigateTo(t.fixtureCtx.url)
-        .typeText('#firstName',"huang")
-        .typeText('#lastName','xiaoqian')
-        .typeText('#cardNumber','4000000000000002')
-        .typeText('#expMonth','12')
-        .typeText('#expYear','22')
-        .typeText('#cvv','1234')
-        .typeText('#zip','123456')
-        .click('.MuiButton-label')
-        .expect(Selector('span').withText('Payment Approved')).ok()
-
-});
 
 
+})
