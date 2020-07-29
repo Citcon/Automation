@@ -98,12 +98,11 @@ typings/
 .idea/modules.xml
 .idea/node.iml
 .idea/runConfigurations/
-app.js
-bin/
 
-package-lock.json
+
+
 public/images/
 public/javascripts/
 public/stylesheets/
-routes/
+
 views/
