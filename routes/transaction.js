@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const getTransaction = require('../controller/transaction')
 
-router.get('/', function(req, res, next) {
+router.get('/transactionId', function(req, res, next) {
 
     const result = getTransaction()
     result.then(data=>{
