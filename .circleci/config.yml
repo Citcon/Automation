@@ -12,5 +12,4 @@ jobs:
           command: |
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
-Check-in the config and see it run. You can see the output of the job in the CircleCI app.
 
