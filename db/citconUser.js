@@ -1,9 +1,9 @@
 const mysql = require('mysql')
-const { MYSQL_CONF }= require('../conf/db')
+const { MYSQL_CONF_USER }= require('../conf/db')
 
 
 
-const con = mysql.createConnection(MYSQL_CONF)
+const con = mysql.createConnection(MYSQL_CONF_USER)
 
 con.connect()
 
