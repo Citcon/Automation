@@ -1,0 +1,994 @@
+{
+	"info": {
+		"_postman_id": "8635a11a-82fb-48b9-ab7a-86b3ab8f9c8f",
+		"name": "auto_pos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pos_initialize",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ae62940-af5c-42c6-8a73-90bdb6bf6b93",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"success\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "store_code",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1576228157",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "version",
+							"value": "2.6.0",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/initialize",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"initialize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_signIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a4f4057-6f3b-45dd-ba1d-d4805fbd2211",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"success\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1576228157",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/sign_in",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"sign_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_showqr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8eeced78-c63a-4561-a345-e273a44984ce",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is true\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"success\");",
+							"});",
+							"pm.test(\"result is not empty\", function () {",
+							"    var qrcode = pm.response.json().qr_code.split('=')[1];",
+							"    pm.expect(qrcode).to.not.be.empty",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1576228157",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "tip",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/gen_payment_qr",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"gen_payment_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_pay",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e01edcfe-f792-4988-8f61-35b284241171",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql('fail');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "134616056466367489",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangpay",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_pay_cupqr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9bd136c0-9386-4cda-ba1a-b549d76ce700",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql('[scanCodeId]DATA_FORMAT_ERROR');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "2E2049C7",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "hQVDUFY",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangpay",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_refund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "663247bf-f644-4e55-87dc-278f07cd6b7d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"fail\");",
+							"});",
+							"pm.test(\"code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.code).to.eql(\"D1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 21:46:52",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangrefund",
+							"type": "text"
+						},
+						{
+							"key": "refund_amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "121212150010012638",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"refund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_refund_cupqr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76bc3c40-30e5-4e88-a2e7-d01da8e7c9c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"fail\");",
+							"});",
+							"pm.test(\"message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Original transaction not found or already refunded\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "2E2049C7",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 21:46:52",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huangrefund",
+							"type": "text"
+						},
+						{
+							"key": "refund_amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "12345678901466",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"refund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_cancel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a81f4a0-66f1-46b3-b1b9-62f232c5e294",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"fail\");",
+							"});",
+							"pm.test(\"code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.code).to.eql(\"E4\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "1234567121212150010013471",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "cancel",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/cancel",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_get_history",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37f88546-8996-4616-bc46-7c08ba67f0f8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is not empty\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).not.to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/get_history",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"get_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos_inquire",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "daf15c01-d1d9-4c64-98d7-10862bf0e64f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql('success');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "{{terminal_code}}",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "HUANG121212150010011702",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-02-17 16:57:23",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/inquire",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"inquire"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "o2o_pay",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "def17a3c-18cf-430f-ab15-5a926370db33",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"success\");",
+							"});",
+							"",
+							"let transaction_id = pm.response.json().transaction_id;",
+							"",
+							"pm.variables.set(\"transaction_id\", transaction_id);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "78e8ac02-6f71-45a4-9b52-1c3c7248f3c8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{o2o_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "12343242342345355",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/o2o_pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"o2o_pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "o2o_refund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acc4f458-6a65-4e4f-90ef-448a2a31872a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"success\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{o2o_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "150000003793",
+							"description": "online transaction_id",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "reference2",
+							"value": "{{transaction_id}}",
+							"description": "posp transaction_id",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/o2o_refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"o2o_refund"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f9e42c7b-2c3f-4403-8ba7-9f027c941c86",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bc58089f-6386-4c4e-be95-53fc197959ff",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,816 @@
+{
+	"info": {
+		"_postman_id": "16781ff4-8fe7-484c-85eb-fa9b78181125",
+		"name": "auto_mobilepay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "qr_pay",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e8b21175-34ea-4b78-b349-4a5bb9e09a22",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4330792e-2804-49fb-9f40-117e88f84522",
+						"exec": [
+							"let auth = pm.environment.get(\"token\");",
+							"let url = pm.environment.get(\"url\");",
+							"let vendor = pm.iterationData.get(\"vendor\");",
+							"let allow = pm.iterationData.get(\"allow_duplicates\")",
+							"let q = '';",
+							"switch (url)",
+							"{",
+							"    case 'dev':",
+							"        q = 'q=D';",
+							"        break;",
+							"    case 'uat':",
+							"        q = 'q=U';",
+							"        break;",
+							"    default:",
+							"        q = 'q=CTCN-P';",
+							"      ",
+							"}",
+							"",
+							"",
+							"pm.test(\"has qstring\", function () {",
+							"    pm.expect(pm.response.text()).to.include(q);",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"// let  first_q = pm.response.text().split('=')[1].split('&')[0];",
+							"// const postRequest = {",
+							"//      method: 'POST',",
+							"//   url: `https://${url}citconpay.com/payment/pay_qr`,",
+							"//   headers: ",
+							"//   { 'cache-control': 'no-cache',",
+							"//      Connection: 'keep-alive',",
+							"//      'Content-Length': '184',",
+							"//      'Accept-Encoding': 'gzip, deflate',",
+							"//      'Postman-Token': 'be4ec84c-42ec-46e9-8145-2af506ec5e04,e29bec18-316e-44b7-8479-2fefdc26921b',",
+							"//      'Cache-Control': 'no-cache',",
+							"//      Accept: '*/*',",
+							"//      'User-Agent': 'PostmanRuntime/7.19.0',",
+							"//      'Content-Type': 'application/x-www-form-urlencoded',",
+							"//      Authorization: auth,",
+							"//      Host: 'citconpay.com'},",
+							"//   form: ",
+							"//   { amount: '1',",
+							"//      currency: 'USD',",
+							"//      vendor: vendor,",
+							"//      reference: '84238473247832874238',",
+							"//      ipn_url: 'http://52.87.248.227/ipn.php',",
+							"//      callback_url: 'http://citcon-inc.com',",
+							"//      allow_duplicates: allow,",
+							"//      client_country: 'CN' }",
+							"// }",
+							"// pm.sendRequest(postRequest, function (err, response) {",
+							"//     if(err){",
+							"//         console.log(err);",
+							"//     }",
+							"//     console.log(postRequest,response)",
+							"    ",
+							"//     let second_q = response.text().split('=')[1].split('&')[0]",
+							"//     pm.test(\"if duplicate or not\", function () {",
+							"//     if(allow ==='yes'){",
+							"//         pm.expect(first_q !== second_q);",
+							"//         console.log(first_q,second_q)",
+							"//     }",
+							"//     else if(allow ==='no'){",
+							"//         pm.expect(first_q === second_q);",
+							"//         console.log(first_q,second_q)",
+							"//     }",
+							"//     })",
+							"// });",
+							"",
+							"",
+							"",
+							"",
+							"let  qcode = pm.response.text().split('=')[1].split('&')[0]",
+							"pm.globals.set(\"transation_id\", qcode);",
+							"",
+							"if(!pm.iterationData.get(\"client_country\")){",
+							"    pm.test(\"if com or cn\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"citconpay.com\");",
+							"});",
+							"}",
+							"else if(pm.iterationData.get(\"client_country\")=='CN'){",
+							"    pm.test(\"if com or cn\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"api.citconpay.cn\");",
+							"});",
+							"}",
+							"else{",
+							"    console.log(null);",
+							"}",
+							"",
+							"if(pm.iterationData.get(\"allow_duplicates\")==='no'){",
+							"     pm.globals.set(\"qcode\",qcode)",
+							"     postman.setNextRequest(\"qr_pay_allow\")",
+							"    ",
+							"}",
+							"else{",
+							"    postman.setNextRequest(\"qr_inquire\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "vendor",
+							"value": "{{vendor}}",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "84238473247832874238",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://52.87.248.227/ipn.php",
+							"type": "text"
+						},
+						{
+							"key": "callback_url",
+							"value": "http://{{url}}.citcon-inc.com",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "{{allow_duplicates}}",
+							"type": "text"
+						},
+						{
+							"key": "client_country",
+							"value": "{{client_country}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/pay_qr",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"pay_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qr_pay_allow",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a1caf610-67a6-4a4e-9fe3-8cff63a09407",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "11d11869-b70d-47eb-9b24-d8b75a3f9780",
+						"exec": [
+							"",
+							"pm.test(\"if qcode equals before\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"qcode\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "vendor",
+							"value": "{{vendor}}",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "84238473247832874238",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://52.87.248.227/ipn.php",
+							"type": "text"
+						},
+						{
+							"key": "callback_url",
+							"value": "http://{{url}}.citcon-inc.com",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "no",
+							"type": "text"
+						},
+						{
+							"key": "client_country",
+							"value": "{{client_country}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/pay_qr",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"pay_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qr_inquire",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22e513a2-3aba-45c3-8f8f-26db02defd09",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"pay status is null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    console.log(jsonData.status)",
+							"    pm.expect(jsonData.status).to.eql(null)",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "32b14578-a58b-4792-affb-f39baf4e9c3a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "transaction_id",
+							"value": "{{transation_id}}",
+							"type": "text"
+						},
+						{
+							"key": "inquire_method",
+							"value": "real",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "84238473247832874238",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/inquire",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"inquire"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qr_inquire_true",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22e513a2-3aba-45c3-8f8f-26db02defd09",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"pay status is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('success');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "transaction_id",
+							"value": "{{transaction_id_true}}",
+							"type": "text"
+						},
+						{
+							"key": "inquire_method",
+							"value": "real",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "84238473247832874238",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/inquire",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"inquire"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qr_refund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b80b9843-421d-4824-bffb-d446888b84e8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"refund status is false\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.refunded).to.eql(false);",
+							"});",
+							"console.log(pm.response.json())"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2a07f56d-6b62-4efa-be22-5a5b70750c5a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "{{transation_id}}",
+							"type": "text"
+						},
+						{
+							"key": "reason",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_reference",
+							"value": "20190627182000",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"refund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qr_refund_true",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b80b9843-421d-4824-bffb-d446888b84e8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"refund status is greater\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('refund amount greater than payment amount');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "{{transaction_id_true}}",
+							"type": "text"
+						},
+						{
+							"key": "reason",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_reference",
+							"value": "20190627182000",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"refund"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "h5_pay",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "70937fd1-55ed-4600-9804-b774044fade3",
+						"exec": [
+							"",
+							"let url = pm.environment.get(\"url\");",
+							"let q = '';",
+							"switch (url)",
+							"{",
+							"    case 'dev':",
+							"        q = 'q=D';",
+							"        break;",
+							"    case 'uat':",
+							"        q = 'q=U';",
+							"        break;",
+							"    default:",
+							"        q = 'q=CTCN-P';",
+							"      ",
+							"    ",
+							"}",
+							"",
+							"",
+							"pm.test(\"has qstring\", function () {",
+							"    pm.expect(pm.response.text()).to.include(q);",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4e2b3acd-bf9b-42e5-af66-b706e84e3271",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "vendor",
+							"value": "{{vendor}}",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "84238473247832874238",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://52.87.248.227/ipn.php",
+							"type": "text"
+						},
+						{
+							"key": "callback_url",
+							"value": "http://{{url}}.citcon-inc.com",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "client_country",
+							"value": "CN",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qr_list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41780622-5b0b-4057-9a57-c12d06dc3ce3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"not empty\", function () {",
+							"    pm.expect(pm.response.text()).to.include('id');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{url}}.citconpay.com/payment/list",
+					"protocol": "https",
+					"host": [
+						"{{url}}",
+						"citconpay",
+						"com"
+					],
+					"path": [
+						"payment",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

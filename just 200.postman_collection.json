@@ -1,0 +1,941 @@
+{
+	"info": {
+		"_postman_id": "576e7c16-d85f-49c2-bdb4-1fbc9a3f3a2a",
+		"name": "just 200",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "chop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7088c3ee-859a-4bc3-9faa-fe914a757501",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"let qstring = pm.response.json().url.split('=')[1];",
+							"console.log(qstring)",
+							"pm.test(\"qstring is not empty\", function(){",
+							"    pm.expect(qstring).not.eql('');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c7e5945b-caf8-458b-adf5-563584e0d6c9",
+						"exec": [
+							"let vendor = pm.iterationData.get(\"vendor\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{chop_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "payment_method",
+							"value": "{{vendor}}",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://merchant.com/ipn",
+							"type": "text"
+						},
+						{
+							"key": "callback_url_success",
+							"value": "http://merchant.com/success",
+							"type": "text"
+						},
+						{
+							"key": "callback_url_fail",
+							"value": "http://merchant.com/fail",
+							"type": "text"
+						},
+						{
+							"key": "mobile_result_url",
+							"value": "http://merchant.com/mobile_confirm?reference=jkh25jh1348fd89sg",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "client_country",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/chop/chop",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"chop",
+						"chop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ronghan online",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4148c47e-b1bb-44a4-8699-178ae6b098aa",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f91499cf-0e7c-45cf-8f46-4c371b93422c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"let qstring = pm.response.text().split('=')[1];",
+							"",
+							"pm.test(\"qstring is not empty\", function(){",
+							"    pm.expect(qstring).not.eql('0&');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ronghan_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "GBP",
+							"type": "text"
+						},
+						{
+							"key": "vendor",
+							"value": "alipay",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://merchant.com/ipn",
+							"type": "text"
+						},
+						{
+							"key": "callback_url",
+							"value": "http://merchant.com/success",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "yes",
+							"type": "text"
+						},
+						{
+							"key": "client_country",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/payment/pay_qr",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"payment",
+						"pay_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "multiwallet",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99425eed-bc2a-4ffb-87ea-7a0a9f47c988",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "60df10b0-3338-4e8c-8c5c-2a350408427e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"let qstring = pm.response.text().split('=')[1];",
+							"",
+							"pm.test(\"qstring is not empty\", function(){",
+							"    pm.expect(qstring).not.eql('');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ams_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "trans_amount",
+							"value": "60",
+							"type": "text"
+						},
+						{
+							"key": "trans_currency",
+							"value": "HKD",
+							"type": "text"
+						},
+						{
+							"key": "vendor",
+							"value": "alipay_hk",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://47.240.46.69:3002/notify",
+							"type": "text"
+						},
+						{
+							"key": "callback_url",
+							"value": "https://www.baidu.com",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "yes",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/payment/pay_qr",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"payment",
+						"pay_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mobilepay",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "abbf90dd-eaed-44d6-b12d-cfc5605c1d91",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "53116d17-2294-4b98-9c98-723fb8109b3d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"let qstring = pm.response.text().split('=')[1];",
+							"",
+							"pm.test(\"qstring is not empty\", function(){",
+							"    pm.expect(qstring).not.eql('0&');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "vendor",
+							"value": "alipay",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "ipn_url",
+							"value": "http://47.240.46.69:3002/notify",
+							"type": "text"
+						},
+						{
+							"key": "callback_url",
+							"value": "https://www.baidu.com",
+							"type": "text"
+						},
+						{
+							"key": "allow_duplicates",
+							"value": "yes",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/payment/pay_qr",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"payment",
+						"pay_qr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "695457ac-5b72-4fa5-90b2-97e89daa6208",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is auth\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql('Token was occupied (C-I0)\\nContact service provider');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "store_code",
+							"value": "TEST",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1576228157",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "7e51a99481a12dc0bb3d55dcf8f17228",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "version",
+							"value": "2.6.0",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/initialize",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"initialize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "313e8a7c-bab1-4f5c-8f4d-386cdbd49db6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"result is wechat\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.method).to.eql('WeChat');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "C8AEE755",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "134616056466367489",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cf99496-f697-4f8e-a64a-58f2e1daa87c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is cup\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql('[scanCodeId]DATA_FORMAT_ERROR');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "C8AEE755",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "hQVDUFY",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "paypal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a2e4906e-58de-40d0-a049-e97b2802fc41",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"result is paypal\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.method).to.eql('paypal');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "E2D340F7",
+							"type": "text"
+						},
+						{
+							"key": "barcode",
+							"value": "79435435345",
+							"type": "text"
+						},
+						{
+							"key": "total",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 15:58:42",
+							"type": "text"
+						},
+						{
+							"key": "currency",
+							"value": "USD",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "nonce",
+							"value": "1111",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hash",
+							"value": "298b347e930866434a85cd7c7fe0eece",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/pay",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pos refund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6744ef23-dbbb-44e6-b3f3-11900ba11868",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"result is refund\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql('Order Status Error (C-A2)\\nCheck Order Status');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "C8AEE755",
+							"type": "text"
+						},
+						{
+							"key": "pos_local_time",
+							"value": "2020-03-06 21:46:52",
+							"type": "text"
+						},
+						{
+							"key": "reference",
+							"value": "huang monitor",
+							"type": "text"
+						},
+						{
+							"key": "refund_amount",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "note",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "transaction_id",
+							"value": "280024670226",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url}}/posp/rest/refund",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posp",
+						"rest",
+						"refund"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
