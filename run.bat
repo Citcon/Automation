@@ -1,3 +1,0 @@
-newman run e:\newman\auto_mobilepay.postman_collection.json -e e:\newman\production.postman_environment.json -d e:\newman\data\mobilepay_data.csv --reporters cli,html --reporter-html-export e:\newman\reports\mobilepay%BUILD_NUMBER%.html & newman run e:\newman\auto_apppay.postman_collection.json -e e:\newman\production.postman_environment.json --reporters cli,html --reporter-html-export e:\newman\reports\apppay%BUILD_NUMBER%.html & newman run e:\newman\auto_chop.postman_collection.json -e e:\newman\production.postman_environment.json -d e:\newman\data\chop_data.csv --reporters cli,html --reporter-html-export e:\newman\reports\chop%BUILD_NUMBER%.html
-
-
